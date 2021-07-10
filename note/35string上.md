@@ -28,3 +28,9 @@
 
 0234
 ![](images/2021-07-10-20-06-35.png)
+
+
+
+----
+
+字符串字面值string literals就是字符串切片string slice
