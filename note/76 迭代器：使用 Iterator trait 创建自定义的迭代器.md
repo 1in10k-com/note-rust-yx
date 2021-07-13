@@ -14,7 +14,48 @@ b，然后做了一个关联函数，new函数，相当于是个构造函数。�
 c，接下来我们要实现这个自定义的迭代器就需要对Counter实现Iterator这个trait。前两节介绍过Iterator这个trait，他有两个关联类型，一个是type item，一个是next方法，主要是next方法。  
 d，首先把type Item这个关联类型指定为u32，具体语法在第19章细讲，现在只需要知道这个迭代器会返回u32类型的数据。  
 e，然后看下next方法，它的返回类型是option self::item，可以理解为就是option u32。  
-f，这里就是普通的函数用法了，不做笔记。0125。所有做完后就拥有了一个自定义迭代器。测试过程就是调next方法
+f，这里就是普通的函数用法了，不做笔记。0125。所有做完后就拥有了一个自定义迭代器。测试过程就是调next方法  
+以下是详细代码
+```
+struct Counter {
+    count: u32,
+}
+
+impl Counter {
+    fn new() -> Counter {
+        Counter { count: 0 }
+    }
+}
+
+impl Iterator for Counter {
+    type Item = u32;
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.count < 5 {
+            self.count += 1;
+            Some(self.count)
+        } else {
+            None
+        }
+    }
+}
+
+#[test]
+
+fn calling_next_directly() {
+    let mut counter = Counter::new();
+
+    assert_eq!(counter.next(), Some(1));
+    assert_eq!(counter.next(), Some(2));
+    assert_eq!(counter.next(), Some(3));
+    assert_eq!(counter.next(), Some(4));
+    assert_eq!(counter.next(), Some(5));
+    assert_eq!(counter.next(), None);
+}
+
+fn main() {}
+
+```
+
 ***
 ![](images/2021-07-13-15-22-11.png)
 zzzz 这里有个更进阶的介绍，用到了zip，map，filter。直接看视频。 0250s
